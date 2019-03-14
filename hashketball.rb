@@ -118,56 +118,38 @@ def game_hash
   }
 end
 
-# def good_practices
-#   game_hash.each do |location, team_data|
-#     #are you ABSOLUTELY SURE what 'location' and 'team data' are? use binding.pry to find out!
-#     binding.pry
-#       team_data.each do |attribute, data|
-#         #are you ABSOLUTELY SURE what 'attribute' and 'team data' are? use binding.pry to find out!
-#         binding.pry
-#
-#         #what is 'data' at each loop through out .each block? when will the following line of code work and when will it break?
-#         data.each do |data_item|
-#             binding.pry
-#       end
-#     end
-#   end
-# end
-#
-# good_practices
-
 def num_points_scored(player)
-  home_or_away = :home
+  points = 0
   game_hash.each do |location, team_data|
     team_data.each do |attribute, data|
       if attribute == :players && data.has_key?(player)
-          home_or_away = location
+          points = game_hash[location][attribute][player][:points]
       end
     end
   end
-  game_hash[home_or_away][:players][player][:points]
+  points
 end
 
 def shoe_size(player)
-  home_or_away = :home
+  shoe_size = 0
   game_hash.each do |location, team_data|
     team_data.each do |attribute, data|
       if attribute == :players && data.has_key?(player)
-          home_or_away = location
+          shoe_size = game_hash[location][attribute][player][:shoe]
       end
     end
   end
-  game_hash[home_or_away][:players][player][:shoe]
+  shoe_size
 end
 
 def team_colors(team)
-  home_or_away = :home
+  colors = []
   game_hash.each do |location, team_data|
     if team_data[:team_name] == team
-      home_or_away = location
+      colors = game_hash[location][:colors].split(", ")
     end
   end
-  game_hash[home_or_away][:colors].split(", ")
+  colors
 end
 
 def team_names
